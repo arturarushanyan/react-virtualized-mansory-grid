@@ -1,0 +1,25 @@
+.masonry-grid {
+    display: flex;
+    margin: 0 auto;
+    width: 90%;
+    max-width: 1200px;
+}
+
+.masonry-column {
+    width: calc(100% / 3); /* Default 3 columns */
+    padding: 10px;
+    box-sizing: border-box; /* Important for padding */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .masonry-column {
+        width: calc(100% / 2); /* 2 columns on smaller screens */
+    }
+}
+
+@media (min-width: 1200px) {
+    .masonry-column {
+        width: calc(100% / 4); /* 4 columns on larger screens */
+    }
+}

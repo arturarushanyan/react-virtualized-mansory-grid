@@ -1,35 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import MasonryGrid from './components/MasonryGrid/MasonryGrid';
+import usePexels from './hooks/usePexels';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+// Placeholder for PhotoDetail component (you'll create this later)
+function PhotoDetail() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <h1>Photo Detail</h1>
+      <Link to="/">Back to Grid</Link>
+    </div>
+  );
 }
 
-export default App
+function App() {
+  const [query, setQuery] = useState('nature');
+  const [page, setPage] = useState(1);
+  const { images, isLoading, error } = usePexels(query, page);
+
+  return (
+    <BrowserRouter>
+      <div className="App">
+        <h1>Masonry Grid</h1>
+        <Routes>
+          <Route path="/" element={
+            <>
+              {error && <p>Error: {error}</p>}
+              {isLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <MasonryGrid images={images} />
+              )}
+            </>
+          } />
+          <Route path="/photo/:id" element={<PhotoDetail />} /> {/* Route for photo detail view */}
+        </Routes>
+      </div>
+    </BrowserRouter>
+  );
+}
+
+export default App;
