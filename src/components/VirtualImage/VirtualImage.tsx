@@ -52,3 +52,5 @@ const VirtualImage: React.FC<VirtualImageProps> = ({ src, alt }) => {
         />
     );
 };
+
+export default VirtualImage;
